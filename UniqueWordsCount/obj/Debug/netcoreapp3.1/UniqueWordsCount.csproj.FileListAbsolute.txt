@@ -1,0 +1,13 @@
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\bin\Debug\netcoreapp3.1\UniqueWordsCount.exe
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\bin\Debug\netcoreapp3.1\UniqueWordsCount.deps.json
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\bin\Debug\netcoreapp3.1\UniqueWordsCount.runtimeconfig.json
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\bin\Debug\netcoreapp3.1\UniqueWordsCount.runtimeconfig.dev.json
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\bin\Debug\netcoreapp3.1\UniqueWordsCount.dll
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\bin\Debug\netcoreapp3.1\UniqueWordsCount.pdb
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\obj\Debug\netcoreapp3.1\UniqueWordsCount.csprojAssemblyReference.cache
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\obj\Debug\netcoreapp3.1\UniqueWordsCount.AssemblyInfoInputs.cache
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\obj\Debug\netcoreapp3.1\UniqueWordsCount.AssemblyInfo.cs
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\obj\Debug\netcoreapp3.1\UniqueWordsCount.csproj.CoreCompileInputs.cache
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\obj\Debug\netcoreapp3.1\UniqueWordsCount.dll
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\obj\Debug\netcoreapp3.1\UniqueWordsCount.pdb
+C:\Users\natali\source\repos\ConvertFiles\UniqueWordsCount\obj\Debug\netcoreapp3.1\UniqueWordsCount.genruntimeconfig.cache
