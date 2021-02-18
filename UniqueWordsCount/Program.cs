@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace UniqueWordsCount
 {
@@ -16,131 +12,55 @@ namespace UniqueWordsCount
 
     class Program
     {
-        private const string sourceDirectoryPath = @"..\..\..\data\source\";
-        private const string destinationDirectoryPath = @"..\..\..\data\destination\";
-
         static void Main(string[] args)
         {
-            var files = GetFiles(sourceDirectoryPath);
+            //Получить перечень файлов в директории-источнике
+            var files = FileProvider.GetFiles();
 
+            //Если файлы в директории отсутствуют
             if (files.Length == 0)
             {
-                Console.WriteLine($"Directory {sourceDirectoryPath} is empty");
+                Console.WriteLine($"Source directory is empty");
                 return;
             }
 
-            Console.WriteLine("Select the file to convert:");
+            //Вывести на консоль список файлов для выбора пользователем
+            Console.WriteLine("Select the file to convert (enter the file number):");
 
-            var number = 0;
-            foreach (var file in files)
+            for (int i = 0; i < files.Length; i++)
             {
-                Console.WriteLine($"{number}. {file}");
-                number++;
+                Console.WriteLine($"{i + 1}. {files[i]}");
             }
+            
+            //Проверка пользовательского ввода
+            var result = int.TryParse(Console.ReadLine(), out int fileNumber);
+            var fileIndex = fileNumber - 1;
 
-            var userInput = Console.ReadLine();
-            var result = int.TryParse(userInput, out int fileNumber);
-
-            if (result == false || fileNumber < 0 || fileNumber >= files.Length)
+            if (result == false || fileIndex < 0 || fileIndex >= files.Length)
             {
                 Console.WriteLine("Incorrect input value");
                 return;
             }
 
-            var filePath = files[fileNumber];
-            var fileName = GetFileName(filePath);
+            //Запоминаем выбранный файл
+            var selectedFile = files[fileIndex];
+            var fileName = FileProvider.GetFileName(selectedFile);
 
-            var words = GetWords(filePath)
-                .Select(x => x.ToLower())
+            //Преобразовать содержимое выбранного файла в массив слов
+            var words = Converter.StringToWords(selectedFile)
+                .Select(word => word.ToLower())
                 .ToArray();
 
-            var dictionary = ConvertWordsArrayToDictionary(words);
+            //Преобразовать массив слов в словарь, где ключ - слово, значение - количество вхождений слова в исходный массив
+            var dictionary = Converter.ToDictionary(words);
 
-            dictionary = SortByValueDescending(dictionary);
-
-            WriteToFile(dictionary, fileName);
-        }
-
-        private static Dictionary<string, int> ConvertWordsArrayToDictionary(string[] words)
-        {
-            var dictionary = new Dictionary<string, int>();
-
-            foreach (var word in words)
-            {
-                if (!dictionary.ContainsKey(word))
-                {
-                    dictionary[word] = 0;
-                }
-
-                dictionary[word]++;
-            }
-
-            return dictionary;
-        }
-
-        private static string GetFileName(string filePath)
-        {
-            var fileName = string.Empty;
-
-            for (int i = filePath.Length - 1; i >= 0; i--)
-            {
-                if (filePath[i] == '\\')
-                {
-                    fileName = filePath.Substring(i + 1);
-                    break;
-                }
-            }
-
-            return fileName;
-        }
-
-        private static string[] GetFiles(string sourcePath)
-        {
-            if (Directory.Exists(sourcePath))
-            {
-                return Directory.GetFiles(sourcePath);
-            }
-            else
-            {
-                Directory.CreateDirectory(sourcePath);
-                return new string[0];
-            }
-        }
-
-        private static string[] GetWords(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                using (var sr = new StreamReader(filePath, Encoding.UTF8))
-                {
-                    return Regex.Split(sr.ReadToEnd(), @"\W+");
-                }
-            }
-            else throw new FileNotFoundException();
-        }
-
-        private static void WriteToFile(Dictionary<string, int> dictionary, string outputFileName)
-        {
-            var filePath = destinationDirectoryPath + outputFileName;
-            if (Directory.Exists(destinationDirectoryPath))
-            {
-                using (var sw = new StreamWriter(filePath))
-                {
-                    foreach (var item in dictionary)
-                    {
-                        sw.WriteLine($"{item.Key} - {item.Value}");
-                    }
-                }
-            }
-            else throw new DirectoryNotFoundException();
-        }
-
-        private static Dictionary<string, int> SortByValueDescending(Dictionary<string, int> dictionary)
-        {
-            return dictionary
-                .OrderByDescending(x => x.Value)
+            //Отсортировать словарь по убыванию значений
+            dictionary = dictionary.OrderByDescending(x => x.Value)
                 .ThenBy(x => x.Key)
                 .ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
+
+            //Записать результат преобразований в файл с заданным именем
+            FileProvider.WriteToFile(dictionary, fileName);
         }
     }
 }
