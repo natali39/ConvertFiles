@@ -1,7 +1,7 @@
 use digitalDesignEmployee;
 go
 
---1.	Сотрудника с максимальной заработной платой.
+--1.	РЎРѕС‚СЂСѓРґРЅРёРєР° СЃ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ Р·Р°СЂР°Р±РѕС‚РЅРѕР№ РїР»Р°С‚РѕР№.
 select
 id,
 [name],
@@ -11,7 +11,7 @@ where salary = (select max(salary) from Employee)
 go
 
 
---2.	Отдел, в котором работает сотрудник с самой высокой зарплатой.
+--2.	РћС‚РґРµР», РІ РєРѕС‚РѕСЂРѕРј СЂР°Р±РѕС‚Р°РµС‚ СЃРѕС‚СЂСѓРґРЅРёРє СЃ СЃР°РјРѕР№ РІС‹СЃРѕРєРѕР№ Р·Р°СЂРїР»Р°С‚РѕР№.
 select
 Employee.department_id,
 Department.[name] as department
@@ -21,7 +21,7 @@ where Employee.salary = (select max(Employee.salary) from Employee)
 go
 
 
---3.	Отдел, с максимальной суммарной зарплатой сотрудников.
+--3.	РћС‚РґРµР», СЃ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ СЃСѓРјРјР°СЂРЅРѕР№ Р·Р°СЂРїР»Р°С‚РѕР№ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ.
 with t as
 (
 select Department.[name] as department, sum(Employee.salary) as total_salary
@@ -35,6 +35,6 @@ where total_salary = (select max(total_salary) from t)
 go
 
 
---4.	Сотрудника, чье имя начинается на «Р» и заканчивается на «н».
+--4.	РЎРѕС‚СЂСѓРґРЅРёРєР°, С‡СЊРµ РёРјСЏ РЅР°С‡РёРЅР°РµС‚СЃСЏ РЅР° В«Р В» Рё Р·Р°РєР°РЅС‡РёРІР°РµС‚СЃСЏ РЅР° В«РЅВ».
 select id, [name] from Employee
-where [name] like 'Р%н'
+where [name] like 'Р %РЅ'
